@@ -1,0 +1,64 @@
+definitions:
+  artifacts:
+    - artifact: &ui_common_artifacts
+       - "UI/screenshots/**"
+       - "UI/target/cucumber-json/vanin-automation-tests.json"
+       - "UI/target/surefire-reports/**"
+  steps:
+    - step: &apiBuildAutomation
+        image: maven:3.8.2-openjdk-11
+        name: Build Automation project for API
+        caches:
+          - maven
+        script:
+          - mvn install -DskipTests
+        artifacts:
+          - "target/**"
+          - "API/target/**"
+          - "UI/target/**"
+          - "Common/target/**"
+    - step: &uiBuildAutomation
+        image: mcr.microsoft.com/playwright/java
+        name: Build Automation project for UI
+        caches:
+          - maven
+        script:
+          - mvn install -DskipTests
+        artifacts:
+          - "target/**"
+          - "API/target/**"
+          - "UI/target/**"
+          - "Common/target/**"
+    - step: &apiAuthorization
+        image: maven:3.8.2-openjdk-11
+        name: Authorization
+        caches:
+          - maven
+        script:
+          - mvn test -Denvironment=dev -Dtenant="test8" -Dcucumber.filter.tags="@zzzz"
+        artifacts:
+          - "API/target/cucumber-json/vanin-automation-tests.json"
+          - "API/target/surefire-reports/**"
+    - step: &uiLogin
+        image: mcr.microsoft.com/playwright/java
+        name: login
+        script:
+          - mvn test -Denvironment="dev" -Dtenant="test8" -Dbrowser="chrome" -Dheadless="true" -Dcucumber.filter.tags="@login"
+        artifacts:
+          *ui_common_artifacts
+pipelines:
+  custom:
+    api-webops:
+      - step: *apiBuildAutomation
+      - step: *apiAuthorization
+    ui-regressiontest-dev-webops:
+      - step: *uiBuildAutomation
+      - step: *uiLogin
+
+
+
+
+
+
+
+
