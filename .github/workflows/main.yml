@@ -16,13 +16,13 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '11'
-        run: mvn install -DskipTests
+      - run: mvn install -DskipTests
 
       - name: Authorization
         uses: actions/setup-java@v2
         with:
           java-version: '11'
-        run: mvn test -Denvironment=dev -Dtenant="test8" -Dcucumber.filter.tags="@zzzz"
+      - run: mvn test -Denvironment=dev -Dtenant="test8" -Dcucumber.filter.tags="@zzzz"
 
       - name: Upload API artifacts
         uses: actions/upload-artifact@v2
@@ -42,13 +42,13 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '11'
-        run: mvn install -DskipTests
+      - run: mvn install -DskipTests
 
       - name: Login
         uses: actions/setup-java@v2
         with:
           java-version: '11'
-        run: mvn test -Denvironment=dev -Dtenant="test8" -Dbrowser="chrome" -Dheadless="true" -Dcucumber.filter.tags="@login"
+      - run: mvn test -Denvironment=dev -Dtenant="test8" -Dbrowser="chrome" -Dheadless="true" -Dcucumber.filter.tags="@login"
 
       - name: Upload UI artifacts
         uses: actions/upload-artifact@v2
