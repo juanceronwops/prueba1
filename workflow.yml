@@ -1,0 +1,60 @@
+name: Automation Workflows
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  api-webops:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Build Automation project for API
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+        run: mvn install -DskipTests
+
+      - name: Authorization
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+        run: mvn test -Denvironment=dev -Dtenant="test8" -Dcucumber.filter.tags="@zzzz"
+
+      - name: Upload API artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: api-artifacts
+          path: |
+            API/target/cucumber-json/vanin-automation-tests.json
+            API/target/surefire-reports
+
+  ui-regressiontest-dev-webops:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Build Automation project for UI
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+        run: mvn install -DskipTests
+
+      - name: Login
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+        run: mvn test -Denvironment=dev -Dtenant="test8" -Dbrowser="chrome" -Dheadless="true" -Dcucumber.filter.tags="@login"
+
+      - name: Upload UI artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: ui-artifacts
+          path: |
+            UI/screenshots
+            UI/target/cucumber-json/vanin-automation-tests.json
+            UI/target/surefire-reports
