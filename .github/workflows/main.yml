@@ -7,7 +7,7 @@ on:
 
 jobs:
   api-webops:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -16,14 +16,14 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '11'
-          distribution: 'windows'
+          distribution: 'ubuntu'
       - run: mvn install -DskipTests
 
       - name: Authorization
         uses: actions/setup-java@v2
         with:
           java-version: '11'
-          distribution: 'windows'
+          distribution: 'ubuntu'
       - run: mvn test -Denvironment=dev -Dtenant="test8" -Dcucumber.filter.tags="@zzzz"
 
       - name: Upload API artifacts
@@ -35,7 +35,7 @@ jobs:
             API/target/surefire-reports
 
   ui-regressiontest-dev-webops:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -44,14 +44,14 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '11'
-          distribution: 'windows'
+          distribution: 'ubuntu'
       - run: mvn install -DskipTests
 
       - name: Login
         uses: actions/setup-java@v2
         with:
           java-version: '11'
-          distribution: 'windows'
+          distribution: 'ubuntu'
       - run: mvn test -Denvironment=dev -Dtenant="test8" -Dbrowser="chrome" -Dheadless="true" -Dcucumber.filter.tags="@login"
 
       - name: Upload UI artifacts
@@ -62,4 +62,5 @@ jobs:
             UI/screenshots
             UI/target/cucumber-json/vanin-automation-tests.json
             UI/target/surefire-reports
+
 
