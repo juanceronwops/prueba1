@@ -1,5 +1,5 @@
-# learnign goal framework test automation
-Repository is used for the testing of the diddit and udiddit applications. 
+# WebOps framework test automation
+Repository is used for the testing of the Webops applications. 
 The main flows for automated testing are UI testing and API testing. 
 The API tests are based on rest assured, the UI tests are based on playwright.
 
@@ -22,8 +22,7 @@ No additional installs are necessary.
 Following common parameters are required to run the tests
 * environment (self-explanatory)
     * dev - int - acc -prd
-* tenant (diddit or udiddit)
-    * vanin - vaninwl
+* tenant (test8, test4 etc...)
 ##### UI
 For running the UI tests following parameters are also required
 * app.browser
@@ -34,15 +33,6 @@ For running the UI tests following parameters are also required
   * Set a folder to place the screenshots. 
   * _If not set, the folder 'screenshots' will be added to the UI project._
 
-##### Example
-To run smoke tests on DEV diddit VLE:
-
-mvn test -Denvironment="dev" -Dtenant="vanin" -Dbrowser="chrome" -Dheadless="true" -Dcucumber.filter.tags="@Smoke and not @Mobile and not @Sysadmin"
 
 ##### API
 No additional parameters required to run API tests
-
-##### Example
-To run functional API test on DEV diddit VLE:
-
-mvn test -Denvironment=dev -Dtenant=vanin -Dcucumber.filter.tags="@VLE and @API and @Functional and not @INT"
