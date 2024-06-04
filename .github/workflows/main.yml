@@ -29,7 +29,7 @@ jobs:
         with:
           name: api-artifacts
           path: |
-            API/target/cucumber-json/vanin-automation-tests.json
+            API/target/cucumber-json/webops-automation-tests.json
             API/target/surefire-reports
 
   ui-regressiontest-dev-webops:
@@ -56,5 +56,5 @@ jobs:
           name: ui-artifacts
           path: |
             UI/screenshots
-            UI/target/cucumber-json/vanin-automation-tests.json
+            UI/target/cucumber-json/webops-automation-tests.json
             UI/target/surefire-reports
